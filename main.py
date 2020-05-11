@@ -11,10 +11,10 @@ class MyMainApp(App):
     def build(self):
         """Starts all application."""
         self.sm = ScreenManager()
-        sim_runner = MainWindow(screen_manager=self.sm, name='main')
-        self.sm.add_widget(sim_runner)
+        simulation = MainWindow(screen_manager=self.sm, name='main')
+        self.sm.add_widget(simulation)
         self.sm.add_widget(ScreenFileChooser(screen_manager=self.sm,
-                                             simulation_runner=sim_runner,
+                                             simulation=simulation,
                                              name='chooser'))
         # TODO Fix size
         Window.size = (1600, 800)

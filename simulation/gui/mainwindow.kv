@@ -26,9 +26,21 @@
                     text: 'Here you will be able to controll your environment variables'
             TabbedPanelItem:
                 text: 'Nodes configuration'
-                Label: 
+                GridLayout:
                     id: map_area
-                    text: 'Here you will be able to call actions on specific nodes'
-
   
+# in future custom logic will be added
+<Slot@Button>:
+    text: "Slot"
 
+<Wall@Label>:
+    canvas:
+        Color:
+            rgb: .28, .28, .28
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    text: ""
+
+<Empty@Label>:
+    text: " "

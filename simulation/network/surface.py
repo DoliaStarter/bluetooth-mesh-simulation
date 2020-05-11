@@ -22,22 +22,9 @@ class Surface:
         self.entry_points, self._surface = self.from_map(map)
         self._meters_in_tile = meters_in_tile
 
-    def wrap_surface(self, surface: List[List[int]]) -> None:
-        """
-        Wrap surface,by placing wall tiles on bounds.
-
-        Because lists are passed as reference, doesn't return anything
-        """
-        cols = len(surface[0])
-        rows = len(surface)
-        surface.insert(0, [Wall()] * cols)
-        surface.append([Wall()] * cols)
-
-        def wrap_row(row):
-            row.insert(0, Wall())
-            row.append(Wall())
-
-        return list(map(wrap_row, surface))
+    @property
+    def width(self):
+        return len(self._surface[0])
 
     def from_map(self, surface: List[List[int]]) -> List[Tile]:
         """Generate graph and assign entry points from provided map.
@@ -56,7 +43,6 @@ class Surface:
         entry_points = []
         surface = [list(map(partial(map_row, entry_points=entry_points), row))
                    for row in surface]
-        self.wrap_surface(surface)
 
         surface = self.assign_neingbors_and_flatten(surface)
         return entry_points, surface
