@@ -7,4 +7,6 @@ Each element consists have models installed on it, and also it has some logic,
 that describes interaction of this element with environment.
 """
 from .element import Element
-from .temperature_tracker import TemperatureTracker
+from .termometr import Termometr
+from .radio import Radio
+from .light import Light

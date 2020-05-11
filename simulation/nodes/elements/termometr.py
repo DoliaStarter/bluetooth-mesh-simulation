@@ -1,6 +1,6 @@
-from simulation.nodes.elements import Element
+from . import Element
 
-class TemperatureTracker(Element):
+class Termometr(Element):
     def __init__(self, env):
         self.__threshold = None
         self.__env = env
@@ -13,7 +13,7 @@ class TemperatureTracker(Element):
     def threshold(self, value):
         self.__threshold = value
 
-    def notify(self, newvalue):
+    def on_environment_change(self, newvalue):
         if newvalue > self.__threshold:
             print("newvalue > threshhold")
 

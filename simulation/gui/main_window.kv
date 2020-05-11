@@ -1,0 +1,43 @@
+#:kivy 1.11.1
+#:include simulation/gui/widgets/device_config.kv
+#:include simulation/gui/widgets/file_chooser.kv
+#:include simulation/gui/styles/tiles.kv
+
+<MainWindow>:
+    orientation: 'horizontal'
+    size: root.size
+    config_panel: config_panel
+    map_area: map_area
+
+    canvas.before:
+        Color:
+            rgba: 0.05, 0.05, 0.1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    BoxLayout:
+        size_hint_x: .3
+        orientation: 'vertical'
+        Button:
+            size_hint_y: None
+            height: dp(75)
+            text: 'Select map'
+            on_release: root.upload_map()
+        BoxLayout:
+            id: config_panel
+            orientation: "vertical"
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 1
+            id: map_area
+            Label:
+                halign: 'center'
+                valign: 'middle'
+                markup: True
+                text: "[size=30][b]Welcome in Smart Home simulation!\n To start using application, please select a map[/b][/size]"
+            
+        
+       
+
+

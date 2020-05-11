@@ -1,0 +1,17 @@
+#:kivy 1.11.1
+# in future custom logic could be added
+<Slot@Button>:
+    text: "Slot"
+
+<Wall@Label>:
+    canvas:
+        Color:
+            rgb: .28, .28, .28
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    text: ""
+
+<Empty@Label>:
+    text: " "
+

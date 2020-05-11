@@ -1,21 +1,19 @@
-from abc import ABC, abstractmethod
-
-
-class Element(ABC):
+class Element:
     # dict with all registered elements
-    reg_elements = {}
-
+    registered_elements = {}
     def __init__(self):
-        pass
+        self._batery_level = 1
 
-    @abstractmethod
-    def notify(self, environment_variable_value):
-        pass
+    def on_environment_change(self, environment_variable_value):
+        """
+        Reacts on changes in environment. Default implementation does nothing.
+        :param environment_variable_value: new value of environment variable.
+        """
 
     def __init_subclass__(cls):
-        """Register all elements"""
-        Element.reg_elements[str.lower(cls.__name__)] = cls
+        """Register created elements"""
+        Element.registered_elements[str.lower(cls.__name__)] = cls
 
     @staticmethod
     def from_name(class_name, env):
-        return Element.reg_elements[class_name](env)
+        return Element.registered_elements[class_name](env)

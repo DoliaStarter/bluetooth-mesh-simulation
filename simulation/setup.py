@@ -1,8 +1,12 @@
 from simulation.network import Network, Frame
 from simulation.nodes import Node
-from simulation.nodes.elements import TemperatureTracker, Element
+from simulation.nodes.elements import Element
 from simulation.environment import Environment
 from typing import List, Tuple
+
+"""
+CLI for simulation.
+"""
 
 
 class Simulation:
@@ -28,7 +32,7 @@ class Simulation:
 
 def run(surface):
     sim = Simulation(surface)
-    elements = [('temperaturetracker', 2)]
+    elements = [('termometr', 2)]
     sim.init_slot(1, elements)
     sim.init_slot(2, elements)
 
