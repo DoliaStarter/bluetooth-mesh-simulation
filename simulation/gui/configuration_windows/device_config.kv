@@ -1,0 +1,14 @@
+#:kivy 1.11.1
+
+<DeviceConfig>:
+    orientation: 'vertical'
+    Label:
+        size_hint_y: None
+        height: dp(75)
+        text: "Device config"
+    Spinner:
+        size_hint_y: None
+        text: 'Devices'
+        height: dp(75)
+        values: 'Radio', 'Light'
+    Label:

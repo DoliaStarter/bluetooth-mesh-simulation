@@ -17,7 +17,7 @@ class MyMainApp(App):
                                              simulation=simulation,
                                              name='chooser'))
         # TODO Fix size
-        Window.size = (1600, 800)
+        Window.fullscreen = True
         return self.sm
 
     # TODO Move to screen file chooser

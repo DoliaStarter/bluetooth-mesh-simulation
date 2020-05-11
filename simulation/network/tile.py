@@ -4,7 +4,6 @@ from typing import List, TypeVar, Dict
 from enum import Enum, auto
 from simulation.network import Frame
 from simulation.nodes import Node
-# Means that content could be frame or node
 Content = TypeVar('Content', Frame, Node)
 
 
