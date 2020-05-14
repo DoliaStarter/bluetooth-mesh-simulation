@@ -44,4 +44,3 @@ class MainWindow(BoxLayout):
         self.config_panel.add_widget(self.current_config)
 
 
-

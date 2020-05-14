@@ -19,7 +19,6 @@ class Simulation:
     def init_slot(self, slot_id: int, elements: List[Tuple[str, int]]):
         """
         Create all elements and register them as Node in network.
-
         :param slot_id: slot where element wil be placed
         :param elements: tuple of form (element_name, amount) of elements,
         that will be assigned to this node
