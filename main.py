@@ -4,6 +4,9 @@ from kivy.app import App
 from simulation.tabs import MainWindow
 from simulation import run
 from kivy.config import Config
+import sys
+sys.dont_write_bytecode = True
+
 
 
 class MyMainApp(App):

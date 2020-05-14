@@ -1,41 +1,44 @@
 """Contains description of `Tile` from which  `Surface` consists."""
-from abc import ABC, abstractmethod
-from typing import List, TypeVar, Dict
 from enum import Enum, auto
 from simulation.network import Frame
 from simulation.nodes import Node
-Content = TypeVar('Content', Frame, Node)
+from kivy.uix.label import Label
+from kivy.uix.button import Button
 
+# addresses = {
+#     '1.1.1.1': [termometr_1, termometr_2]
+# }
+
+# def add_listener(self, ip, listener):
+#     self.addresses[ip].add(listener)
+
+# def send(self, topic, frame):
+#     for subscriber in self.topics[topic]:
+#         subscriber.receive(frame)
 
 class TileType(Enum):
-    """Type of created tile."""
+    """Type of created tile. Used for map parsing."""
     EMPTY = 0
     SLOT = 1
     WALL = 2
 
 
-class TileState(Enum):
-    """State of tile."""
-    EMPTY = auto()
-    NOT_EMPTY = auto()
-
-
-class Tile(ABC):
+class Tile:
     """Describes the most basic empty element  of `Surface`."""
     tile_types = {}
     tiles_created = 0
     # TODO Move assigment to Network
     frames_passed = 0
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         """
         On create all tiles are empty because they still hadn't received.
         nothing, and there no devices connected to them.
         """
+        super().__init__(**kwargs)
         Tile.tiles_created += 1
-        self.id = Tile.tiles_created
-        self.last_received_frame_id = -1
-        self._content: Content = None
+        self._id = Tile.tiles_created
+        self._content = None
         self.neinghbors = []
 
     def assign_frame_id(self, frame: Frame) -> int:
@@ -59,29 +62,14 @@ class Tile(ABC):
             raise ValueError(f"{tile_as_int} not a valid tile type")
         return Tile.tile_types[tile_as_int](**kwargs)
 
-    def propagate(self) -> None:
-        """
-        Propagate frame content on surface.
-        :param `trace` - tiles, already visited by this frame
-        """
-        for tile in self.neinghbors:
-            if self.content.frame_id != tile.last_received_frame_id:
-                tile.receive(self.content)
-        self._state = TileState.EMPTY
-
     def __init_subclass__(cls):
         Tile.tile_types[TileType[str.upper(cls.__name__)].value] = cls
 
-    @abstractmethod
-    def receive(self, val: Frame, from_tile) -> None:
-        """Decribe what should happend with Frame after tile will receive it"""
-        raise NotImplementedError
-
-    def __repr__(self):
+    def __str__(self):
         return str.lower(self.__class__.__name__)
 
 
-class Slot(Tile):
+class Slot(Tile, Button):
     """
     Type of `Tile` to which device can be assigned.
     """
@@ -98,31 +86,13 @@ class Slot(Tile):
         """
         self.content = node
 
-    def receive(self, frame: Frame, path_loss: float) -> None:
-        """
-        Check if frame could be received with given path_loss.
 
-        :param frame: received frame
-        :param path_loss: calculated path_loss
-        """
-        print(f"Received frame {frame} with path loss: {path_loss}")
-        self.content.receive(frame)
-
-
-class Wall(Tile):
+class Wall(Tile, Label):
     """
     Type of Tile from which Frame can't pass
     """
 
-    def receive(self, val: Frame):
-        pass
-
-
-class Empty(Tile):
+class Empty(Tile, Label):
     """
     Type of tile where nothing can't happend.
     """
-
-    def receive(self, val):
-        self.content = val
-        self.propagate()
