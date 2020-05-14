@@ -1,7 +1,7 @@
 """Class describes surface on which frames are modving."""
 from typing import List
 from functools import partial
-from simulation.network import TileType, Tile, Slot, Wall
+from simulation.tiles import Tile, Slot, Wall
 from operator import attrgetter
 
 

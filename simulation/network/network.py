@@ -31,6 +31,11 @@ class Network:
         self._surface = Surface(map)
         self._route_table = {}
         self._entry_points = {}
+        self.addresses = {}
+
+    def add_listener(self, addr, listener):
+        self.addresses[addr].append(listener)
+
 
     def register_node(self, node: Node, slot: int):
         """
@@ -45,12 +50,20 @@ class Network:
 
     def transmit(self, frame: Frame, frequency: int):
         """Send frame given as argument."""
-        print(self._entry_points)
         distance = self._calculate_distance(frame.source_id, frame.dest_id)
         path_loss = self._calculate_path_loss(frequency, distance, 1)
-        print(
-            f"Transmitting frame: {str(frame)} on distance {distance} meters with path loss {path_loss}")
-        self._entry_points[frame.dest_id].receive(frame, path_loss)
+        # implement
+        for elem in self.addresses[frame.publishing_id]:
+            if elem.can_receive(path_loss):
+                elem.receive(frame)
+            else:
+                self.find_relay(frame.dest_id)
+
+    def find_relay(self, id):
+        pass
+        # print(
+            # f"Transmitting frame: {str(frame)} on distance {distance} meters with path loss {path_loss}")
+        # self._entry_points[frame.dest_id].receive(frame, path_loss)
 
     def _calculate_distance(self, from_node: 'device id', to_node: 'device id'):
         """

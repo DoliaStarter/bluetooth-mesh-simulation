@@ -1,9 +1,7 @@
 """Contains description of `Tile` from which  `Surface` consists."""
 from enum import Enum, auto
 from simulation.network import Frame
-from simulation.nodes import Node
 from kivy.uix.label import Label
-from kivy.uix.button import Button
 
 # addresses = {
 #     '1.1.1.1': [termometr_1, termometr_2]
@@ -69,22 +67,7 @@ class Tile:
         return str.lower(self.__class__.__name__)
 
 
-class Slot(Tile, Button):
-    """
-    Type of `Tile` to which device can be assigned.
-    """
 
-    def __init__(self):
-        super().__init__()
-        self.content = None
-
-    def assign_node(self, node: Node):
-        """
-        Assign new node to this slot.
-
-        :param node: new node to assign
-        """
-        self.content = node
 
 
 class Wall(Tile, Label):

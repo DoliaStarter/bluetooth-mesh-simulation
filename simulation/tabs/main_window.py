@@ -5,7 +5,8 @@ from kivy.uix.button import Button
 from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 import os.path
-from simulation.network import Surface, Slot, Wall, Empty
+from simulation.network import Surface
+from simulation.tiles import Slot
 from .widgets import FileChooser, DeviceConfigWindow
 Builder.load_file("simulation/gui/main_window.kv")
 
