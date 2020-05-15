@@ -35,6 +35,7 @@ class MainWindow(BoxLayout):
     def upload_map(self):
         FileChooser(callback=self.run)
 
+<<<<<<< HEAD
     def _open_device_config(self, slot):
         """
         Opens device config window for slot.
@@ -42,3 +43,10 @@ class MainWindow(BoxLayout):
         :param slot: slot pressed by user.
         """
         self.device_config.open(slot)
+=======
+    def _open_current_config_window(self):
+        self.config_panel.clear_widgets()
+        self.config_panel.add_widget(self.current_config)
+
+
+>>>>>>> 67dd6113b8777cb2708ae6900e90bee4a89e3bbe
