@@ -3,17 +3,15 @@ from kivy.uix.scrollview import ScrollView
 from kivy.properties import ObjectProperty
 from simulation.nodes.elements import Element
 from kivy.factory import Factory
-# move in separate file
-
 
 class DeviceConfigWindow(ScrollView):
 
     def __init__(self, config_panel, **kwargs):
         super().__init__(**kwargs)
-        self.newElement()
+        self.new_element()
         self._config_panel = config_panel
 
-    def newElement(self):
+    def new_element(self):
         block = DeviceRow()
         self.container.add_widget(block)
 
@@ -32,6 +30,7 @@ class DeviceConfigWindow(ScrollView):
         self._parse_slot()
         self._config_panel.clear_widgets()
         self._config_panel.add_widget(self)
+
 
 class DeviceRow(BoxLayout):
     def __init__(self, **kwargs):

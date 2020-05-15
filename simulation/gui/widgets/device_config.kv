@@ -5,12 +5,15 @@
     BoxLayout:
         id: myBox
         orientation: 'vertical'
+        size_hint_y: None
+        height: self.minimum_height
 
 
-<DeviceRaw>:
+<DeviceRow>:
     devices: devices
     orientation: 'horizontal'
-    cols: 3
+    size_hint_y: None
+    height: dp(75)
     Spinner:
         id: devices
         size_hint_y: None
