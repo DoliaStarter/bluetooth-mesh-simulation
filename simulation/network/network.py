@@ -47,7 +47,7 @@ class Network:
                 continue
             distance = self._calculate_distance(src.world_pos, node.world_pos)
             path_loss = self._calculate_path_loss(self._freqeuncy, distance)
-            if node.could_receive(node.transmitting_power - path_loss):
+            if node.could_receive(path_loss):
                 node.receive(frame)
 
     def _calculate_path_loss(self, f: int, d: int) -> float:
