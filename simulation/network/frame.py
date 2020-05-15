@@ -4,11 +4,15 @@ from dataclasses import dataclass
 
 @dataclass
 class Frame:
-    """Describe frame, that devices sen to each other."""
-    source_id: int
-    dest_id: int
-    frame_id: int = None
-
+    """
+    Describe frame, that devices sen to each other.
+    :param topic: topic of this message
+    :param ttl: how many hops this fram can made
+    :param content: message sent with this frame
+    """
+    topic: str
+    ttl: int
+    content: str
 
     def __str__(self):
-        return f"Going from {self.source_id} to {self.dest_id}"
+        return f"Frame on topic '{self.topic}'. TTL: {self.ttl}"

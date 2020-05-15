@@ -8,17 +8,32 @@ from kivy.factory import Factory
 
 class DeviceConfigWindow(ScrollView):
 
-    def __init__(self, **kwargs):
+    def __init__(self, config_panel, **kwargs):
         super().__init__(**kwargs)
         self.newElement()
+        self._config_panel = config_panel
 
     def newElement(self):
-        block = Factory.DeviceRaw()
+        block = DeviceRow()
         self.container.add_widget(block)
 
+    def _parse_slot(self):
+        """
+        Parse self.current_slot with devices and fill scroll view with them.
+        """
 
-class DeviceRaw(BoxLayout):
+    def open(self, slot):
+        """
+        Opens config window for slot.
 
-        def __init__(self, **kwargs):
-            super().__init__(**kwargs)
-            self.devices.values = Element.registered_elements.keys()
+        :param slot: slot with node for this config
+        """
+        self.current_slot = slot
+        self._parse_slot()
+        self._config_panel.clear_widgets()
+        self._config_panel.add_widget(self)
+
+class DeviceRow(BoxLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.devices.values = Element.registered_elements.keys()

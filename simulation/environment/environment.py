@@ -1,20 +1,24 @@
-from simulation.environment.environment_variables import EnvironmentVariable
-
-
 class Environment:
     """
     Class which should state of world.
 
     Provide interface to interaction between nodes and elements.
     """
+    temperature = 0
+    humidity = 0
+    illuminance = 0
 
-    def __init__(self):
-        """Bake all exising variables."""
-        self.bake()
+    @staticmethod
+    def heat():
+        """
+        Affect temperature and humidity.
+        """
+        pass
 
-    def bake(self):
-        """Create all implemented environment variables."""
-        self.variables = {}
-        for env_variable, var_creator in EnvironmentVariable.existing_variables.items():
-            self.variables[env_variable] = var_creator()
-        
+    @staticmethod
+    def turn_light():
+        """
+        Affect illuminance
+        """
+        pass
+    
