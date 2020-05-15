@@ -1,18 +1,9 @@
 """Contains description of `Tile` from which  `Surface` consists."""
-from enum import Enum, auto
+from enum import Enum
+from typing import Tuple
 from simulation.network import Frame
 from kivy.uix.label import Label
 
-# addresses = {
-#     '1.1.1.1': [termometr_1, termometr_2]
-# }
-
-# def add_listener(self, ip, listener):
-#     self.addresses[ip].add(listener)
-
-# def send(self, topic, frame):
-#     for subscriber in self.topics[topic]:
-#         subscriber.receive(frame)
 
 class TileType(Enum):
     """Type of created tile. Used for map parsing."""
@@ -22,32 +13,24 @@ class TileType(Enum):
 
 
 class Tile:
-    """Describes the most basic empty element  of `Surface`."""
+    """
+    Element of Surface.
+    """
     tile_types = {}
-    tiles_created = 0
-    # TODO Move assigment to Network
-    frames_passed = 0
+    def __init__(self):
+        super().__init__()
+        self._pos = None
 
-    def __init__(self, **kwargs):
+    @property
+    def world_pos(self) -> Tuple[int, int]:
         """
-        On create all tiles are empty because they still hadn't received.
-        nothing, and there no devices connected to them.
+        Position of tile in the world.
         """
-        super().__init__(**kwargs)
-        Tile.tiles_created += 1
-        self._id = Tile.tiles_created
-        self._content = None
-        self.neinghbors = []
+        return self._pos
 
-    def assign_frame_id(self, frame: Frame) -> int:
-        """
-        Assigns frame id, to frame so it could be identified on `Tile` level
-        :param frame: - unregistered Frame
-        :return: - assigned id
-        """
-        Tile.frames_passed += 1
-        frame.frame_id = Tile.frames_passed
-        return Tile.frames_passed
+    @world_pos.setter
+    def world_pos(self, value: Tuple[int, int]):
+        self._pos = value
 
     @staticmethod
     def from_int(tile_as_int: int, **kwargs):
@@ -67,15 +50,17 @@ class Tile:
         return str.lower(self.__class__.__name__)
 
 
-
-
-
 class Wall(Tile, Label):
     """
-    Type of Tile from which Frame can't pass
+    Tile through which Frame can't pass
     """
+    def __init__(self):
+        super().__init__()
+
 
 class Empty(Tile, Label):
     """
-    Type of tile where nothing can't happend.
+    Tile where nothing can't happend.
     """
+    def __init__(self):
+        super().__init__()

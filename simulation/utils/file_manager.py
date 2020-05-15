@@ -10,8 +10,7 @@ class FileManager:
     def load_map(map_name):
         """Read from filename and parse it as int 2d array."""
         with open(join(FileManager.map_dir, map_name), 'r') as file:
-            parsed_surface = [
-                map(int, line[:-1]) for line in file]
+            parsed_surface = [list(map(int, line[:-1])) for line in file]
         return parsed_surface
 
     @staticmethod

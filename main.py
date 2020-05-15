@@ -9,7 +9,7 @@ sys.dont_write_bytecode = True
 
 
 
-class MyMainApp(App):
+class BluetoothMeshSimulation(App):
     def build(self):
         """Starts all application."""
         Config.set('graphics', 'window_state', 'maximized')
@@ -17,4 +17,4 @@ class MyMainApp(App):
         return MainWindow()
 
 if __name__ == "__main__":
-    MyMainApp().run()
+    BluetoothMeshSimulation().run()

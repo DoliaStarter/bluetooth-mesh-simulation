@@ -5,8 +5,7 @@ from kivy.uix.button import Button
 from kivy.factory import Factory
 from kivy.uix.boxlayout import BoxLayout
 import os.path
-from simulation.network import Surface
-from simulation.tiles import Slot
+from simulation.tiles import Surface, Slot
 from .widgets import FileChooser, DeviceConfigWindow
 Builder.load_file("simulation/gui/main_window.kv")
 
@@ -21,7 +20,9 @@ class MainWindow(BoxLayout):
         self.device_config = DeviceConfigWindow(self.config_panel)
 
     def run(self, map_):
-        """Simple demo, that prints file converted to tilemap into console."""
+        """
+        Starts simulation with new map.
+        """
         surface = Surface(map_)
         self.map_area.clear_widgets()
         self.map_area.cols = surface.width

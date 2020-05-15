@@ -1,90 +1,67 @@
 """Desribes classes used for `Node` communication."""
-from simulation.network import Surface
+from simulation.tiles import Surface
 from simulation.network import Frame
 from simulation.nodes import Node
-from typing import List
-from itertools import permutations
-from math import log10
+from typing import List, Tuple
+from math import log10, sqrt
 
 
 class Network:
-    """Describes medium where all communication happend."""
     """
-    Table of constants for ITU indoor propagation model
-    1.(freq MHz, floors): rate
-    2.freq: rate
+    Implement logic of frame transmission.
     """
-    _floor_penetration_loss_factor = {
-        (900, 1): 9,
-        (900, 2): 19,
-        (900, 3): 24,
-        (2000, 1): 15,
-        (2000, 2): 19,
-        (2000, 3): 23
-    }
-    _distance_power_loss_coefficient = {
-        900: 33,
-        2000: 30
-    }
 
-    def __init__(self, map: List[List[int]]):
-        self._surface = Surface(map)
-        self._route_table = {}
-        self._entry_points = {}
-        self.addresses = {}
-
-    def add_listener(self, addr, listener):
-        self.addresses[addr].append(listener)
-
-
-    def register_node(self, node: Node, slot: int):
+    def __init__(self, map_: List[List[int]]):
+        self._surface = Surface(map_)
+        self._existing_nodes = []
+        self._freqeuncy = 2400
         """
-        Add node to network, so it can start share messages.
-
-        :param `node`: - that represents this node.
-        :param `slot`: - id of slot on surface, where this node will be assigned
+        Standart Bluetooth frequency
         """
-        self._entry_points[node.id] = self._surface.entry_points[slot]
-        self._entry_points[node.id].assign_node(node)
-        print(f"Device was succesfully registered on slot {slot}")
-
-    def transmit(self, frame: Frame, frequency: int):
-        """Send frame given as argument."""
-        distance = self._calculate_distance(frame.source_id, frame.dest_id)
-        path_loss = self._calculate_path_loss(frequency, distance, 1)
-        # implement
-        for elem in self.addresses[frame.publishing_id]:
-            if elem.can_receive(path_loss):
-                elem.receive(frame)
-            else:
-                self.find_relay(frame.dest_id)
-
-    def find_relay(self, id):
-        pass
-        # print(
-            # f"Transmitting frame: {str(frame)} on distance {distance} meters with path loss {path_loss}")
-        # self._entry_points[frame.dest_id].receive(frame, path_loss)
-
-    def _calculate_distance(self, from_node: 'device id', to_node: 'device id'):
+        self._floor_loss_factor = 15
         """
-        Calculates distance between two nodes, based on data in _device_entry_points.
+        Constant from ITU indoor propagation model
         """
-        route = (self._entry_points[from_node], self._entry_points[to_node])
-        distance = [self._route_table.setdefault(
-            route_perm, None) for route_perm in permutations(route)]
-        if not any(distance):
-            distance = [self._surface.calculate_distance(*route)]
-            self._route_table[route] = distance[0]
-        return list(map(lambda el: el, distance))[0]
+        self._distance_loss_factor = 30
+        """
+        Constant from ITU indoor propagation model
+        """
 
-    def _calculate_path_loss(self, f: int, d: int, n: int) -> float:
+    def add_node(self, new_node):
+        """
+        Add new node to the network.
+
+        :param new_node: node to be added.
+        """
+        self._existing_nodes.append(new_node)
+
+    def broadcast(self, frame: Frame, src: Node):
+        """
+        Broadcast frame to the network.
+
+        :param frame: frame to be broadcasted
+        :param src: node that sending this frame
+        """
+        for node in self.existing_nodes:
+            if node is src:
+                continue
+            distance = self._calculate_distance(src.world_pos, node.world_pos)
+            path_loss = self._calculate_path_loss(self._freqeuncy, distance)
+            if node.could_receive(node.transmitting_power - path_loss):
+                node.receive(frame)
+
+    def _calculate_path_loss(self, f: int, d: int) -> float:
         """
         Calculate path loss based on ITU indoor propagation model.
 
         :param f: frequency
         :param d: distance between between transmiter and reciver
-        :param n: number of floors between transmiter and reciver
-        :returns path_loss: path_loss coefficient for given params
+        :returns path_loss: path loss in dB
         """
-        return 20 * log10(f) + self._distance_power_loss_coefficient[(f)]\
-            * log10(d) + self._floor_penetration_loss_factor[(f, n)] - 28
+        return 20 * log10(f) + self._distance_loss_factor * log10(d) + self._floor_loss_factor - 28
+
+    def _calculate_distance(self, pos1: Tuple[int, int], pos2: Tuple[int, int]) -> float:
+        """
+        Calculates euclidian distance between two points.
+        """
+        return sqrt((pos1[0] - pos2[0]) ** 2 + (pos1[1] - pos2[1])**2)
