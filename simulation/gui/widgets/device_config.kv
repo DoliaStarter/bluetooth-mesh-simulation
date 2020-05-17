@@ -1,15 +1,30 @@
 #:kivy 1.11.1
 
 <DeviceConfigWindow>:
-    devices: devices
-    orientation: 'vertical'
-    Label:
+    container: myBox
+    BoxLayout:
+        id: myBox
+        orientation: 'vertical'
         size_hint_y: None
-        height: dp(75)
-        text: "Device config"
+        height: self.minimum_height
+
+
+<DeviceRow>:
+    devices: devices
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(75)
     Spinner:
         id: devices
         size_hint_y: None
         text: 'Devices'
         height: dp(75)
-    Label:
+        #on_text: root.parent.newElem()
+    Button:
+        size_hint_y: None
+        height: dp(75)
+        text: "Configure"
+    Button:
+        size_hint_y: None
+        height: dp(75)
+        text: "Delete"
