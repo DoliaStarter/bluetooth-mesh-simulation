@@ -1,11 +1,12 @@
 #:kivy 1.11.1
 
 <ConfPopup>:
-    container : cont
-    Button:
-        text: "Configure"
-        on_release: root.btn()
 
+    Button:
+
+        size_hint: 0.5, 0.5
+        separator_color: 0.9, 0.9, 0.9, 1
+        title: "Configure"
 
     Label:
         text: "Configure your device"
@@ -21,7 +22,7 @@
         text: 'OK'
 
     Button:
-        text: 'Subscribed id'
+        #on_text: 'Subscribed id'
 
     Button:
-        text: 'Published id'
+        #on_text: 'Published id'

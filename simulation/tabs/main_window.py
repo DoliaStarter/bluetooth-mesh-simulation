@@ -42,8 +42,7 @@ class MainWindow(BoxLayout):
     def upload_map(self):
         FileChooser(callback=self.run)
 
-    def config_device(self):
-        ConfPopup(callback=self.run)
+
 
     def _open_device_config(self, slot):
         """
