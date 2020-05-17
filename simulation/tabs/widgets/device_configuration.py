@@ -2,7 +2,11 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import ObjectProperty
 from simulation.nodes.elements import Element
+
 from kivy.factory import Factory
+
+from simulation.tabs.widgets.conf_popup import ConfPopup
+
 
 class DeviceConfigWindow(ScrollView):
 
@@ -32,7 +36,16 @@ class DeviceConfigWindow(ScrollView):
         self._config_panel.add_widget(self)
 
 
+
+
+
 class DeviceRow(BoxLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.devices.values = Element.registered_elements.keys()
+
+    def __init__(self):
+        self.open_conf.bind(on_press=ConfPopup)
+
+
+
