@@ -7,6 +7,8 @@ from kivy.uix.boxlayout import BoxLayout
 import os.path
 from simulation.tiles import Surface, Slot
 from .widgets import FileChooser, DeviceConfigWindow
+from .widgets.conf_popup import ConfPopup
+
 Builder.load_file("simulation/gui/main_window.kv")
 
 
@@ -15,9 +17,14 @@ class MainWindow(BoxLayout):
     config_panel = ObjectProperty()
     tab_panel = ObjectProperty()
 
+
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.device_config = DeviceConfigWindow(self.config_panel)
+
+
+
 
     def run(self, map_):
         """
@@ -35,6 +42,9 @@ class MainWindow(BoxLayout):
     def upload_map(self):
         FileChooser(callback=self.run)
 
+    def config_device(self):
+        ConfPopup(callback=self.run)
+
     def _open_device_config(self, slot):
         """
         Opens device config window for slot.
@@ -42,3 +52,10 @@ class MainWindow(BoxLayout):
         :param slot: slot pressed by user.
         """
         self.device_config.open(slot)
+
+
+
+
+
+
+

@@ -1,0 +1,27 @@
+#:kivy 1.11.1
+
+<ConfPopup>:
+    container : cont
+    Button:
+        text: "Configure"
+        on_release: root.btn()
+
+
+    Label:
+        text: "Configure your device"
+        size_hint: 0.6, 0.2
+        pos_hint: {"x":0.2, "top":1}
+
+   BoxLayout:
+    orientation: 'horizontal'
+    Button:
+        text: 'Cancel'
+        on_release: root.dismiss()
+    Button:
+        text: 'OK'
+
+    Button:
+        text: 'Subscribed id'
+
+    Button:
+        text: 'Published id'

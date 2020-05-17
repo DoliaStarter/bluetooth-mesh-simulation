@@ -3,6 +3,7 @@
 #:include simulation/gui/widgets/file_chooser.kv
 #:include simulation/gui/styles/tiles.kv
 
+
 <MainWindow>:
     orientation: 'horizontal'
     size: root.size
@@ -23,6 +24,8 @@
             height: dp(75)
             text: 'Select map'
             on_release: root.upload_map()
+
+
         BoxLayout:
             id: config_panel
             orientation: "vertical"
@@ -36,8 +39,8 @@
                 valign: 'middle'
                 markup: True
                 text: "[size=30][b]Welcome in Smart Home simulation!\n To start using application, please select a map[/b][/size]"
-            
-        
-       
+
+
+
 
 
