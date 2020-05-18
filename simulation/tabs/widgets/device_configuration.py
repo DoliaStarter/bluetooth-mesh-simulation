@@ -40,11 +40,11 @@ class DeviceConfigWindow(ScrollView):
 
 
 class DeviceRow(BoxLayout):
+    open_conf =ObjectProperty()
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.devices.values = Element.registered_elements.keys()
-
-    def __init__(self):
         self.open_conf.bind(on_press=ConfPopup)
 
 
