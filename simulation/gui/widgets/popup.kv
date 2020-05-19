@@ -1,28 +1,31 @@
 #:kivy 1.11.1
 
 <ConfPopup>:
+    title: 'Configure your device'
+    size_hint: 0.5, 0.5
+    separator_color: 0.9, 0.9, 0.9, 1
+    title: "Configure your device"
 
-    Button:
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Configure your device.'
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                text: 'Cancel'
+                on_release: root.dismiss()
+            Button:
+                text: 'ok'
 
-        size_hint: 0.5, 0.5
-        separator_color: 0.9, 0.9, 0.9, 1
-        title: "Configure"
 
-    Label:
-        text: "Configure your device"
-        size_hint: 0.6, 0.2
-        pos_hint: {"x":0.2, "top":1}
 
-   BoxLayout:
-    orientation: 'horizontal'
-    Button:
-        text: 'Cancel'
-        on_release: root.dismiss()
-    Button:
-        text: 'OK'
+            TextInput:
+                hint_text: 'Published id'
+            TextInput:
+                hint_text: 'Described id'
 
-    Button:
-        #on_text: 'Subscribed id'
 
-    Button:
-        #on_text: 'Published id'
+
+
+
