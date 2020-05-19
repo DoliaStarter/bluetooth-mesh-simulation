@@ -8,7 +8,6 @@
         size_hint_y: None
         height: self.minimum_height
 
-
 <DeviceRow>:
     devices: devices
     orientation: 'horizontal'
@@ -20,7 +19,6 @@
         size_hint_y: None
         text: 'Devices'
         height: dp(75)
-        #on_text: root.parent.newElem()
     Button:
         id: open_conf
         size_hint_y: None
@@ -30,3 +28,4 @@
         size_hint_y: None
         height: dp(75)
         text: "Delete"
+        on_press: root.remove()

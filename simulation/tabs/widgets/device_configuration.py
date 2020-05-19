@@ -19,7 +19,6 @@ class DeviceConfigWindow(ScrollView):
     def new_element(self):
         block = DeviceRow(self)
         self.container.add_widget(block)
-        print("add new elem")
 
     def _parse_slot(self):
         """
@@ -37,15 +36,28 @@ class DeviceConfigWindow(ScrollView):
         self._config_panel.clear_widgets()
         self._config_panel.add_widget(self)
 
+    def save_config(self, config_record: dict):
+        """
+        Saves configuration for current device
+        :param config_record: dict, that describes configuration for current device
+        {
+            'device': self.device,
+            'publishing': self.publishing,
+            'subcribed': self.subcribed,
+        }
+        """
+        self.current_slot.save_device(config_record)
+
 
 class DeviceRow(BoxLayout):
-    open_conf =ObjectProperty()
+    open_conf = ObjectProperty()
 
     def __init__(self, conf_window, **kwargs):
         super().__init__(**kwargs)
-        self.conf_window = conf_window
         self.devices.values = Element.registered_elements.keys()
-        self.open_conf.bind(on_press=lambda _: ConfPopup(self.conf_window))
+        self.open_conf.bind(on_press=lambda _: ConfPopup(
+            conf_window, self.devices.text))
 
-
-
+    def remove(self):
+        if len(self.parent.children) > 1:
+            self.parent.remove_widget(self)

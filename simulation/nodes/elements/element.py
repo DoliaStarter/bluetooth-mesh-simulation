@@ -15,5 +15,5 @@ class Element:
         Element.registered_elements[str.lower(cls.__name__)] = cls
 
     @staticmethod
-    def from_name(class_name, env):
-        return Element.registered_elements[class_name](env)
+    def from_name(class_name):
+        return Element.registered_elements[class_name]()

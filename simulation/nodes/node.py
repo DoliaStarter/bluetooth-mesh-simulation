@@ -1,12 +1,13 @@
 """Contains abstract base for all nodes"""
 from simulation.network import Frame
 # https://www.bluetooth.com/blog/3-key-factors-that-determinethe-range-of-bluetooth/
+from .elements import Element
 
 class Node:
     """Device/collection of devices, that could communicate via network."""
     count = 0
 
-    def __init__(self, elements, topics: dict, feature = None):
+    def __init__(self, elements: list, topics: dict, feature = None):
         """
         :param elements: elements, that will be placed in this node
         :param topics: dict, where key is a topic and all subscribed devices in this node are values
@@ -56,3 +57,8 @@ class Node:
 
     def could_receive(self, signal_power) -> bool:
         return self.sensitivity < signal_power
+
+    def add_element(self, device):
+        # Change 
+        dev = Element.from_name(device['device'])
+        self._elements.append(dev)
