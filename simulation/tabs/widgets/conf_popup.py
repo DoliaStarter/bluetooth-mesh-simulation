@@ -8,8 +8,13 @@ from kivy.uix.popup import Popup
 
 
 class ConfPopup(Popup):
+    #conf_window = ObjectProperty()
 
-    def __init__(self, callback, **kwargs):
+    def __init__(self, conf_window, **kwargs):
         super().__init__(**kwargs)
+        self.conf_window = conf_window
         self.open()
 
+    def add_new_elem(self):
+        self.conf_window.new_element()
+        self.dismiss()

@@ -1,6 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.scrollview import ScrollView
 from kivy.properties import ObjectProperty
+from functools import partial
 from simulation.nodes.elements import Element
 
 from kivy.factory import Factory
@@ -16,8 +17,9 @@ class DeviceConfigWindow(ScrollView):
         self._config_panel = config_panel
 
     def new_element(self):
-        block = DeviceRow()
+        block = DeviceRow(self)
         self.container.add_widget(block)
+        print("add new elem")
 
     def _parse_slot(self):
         """
@@ -36,16 +38,14 @@ class DeviceConfigWindow(ScrollView):
         self._config_panel.add_widget(self)
 
 
-
-
-
 class DeviceRow(BoxLayout):
     open_conf =ObjectProperty()
 
-    def __init__(self, **kwargs):
+    def __init__(self, conf_window, **kwargs):
         super().__init__(**kwargs)
+        self.conf_window = conf_window
         self.devices.values = Element.registered_elements.keys()
-        self.open_conf.bind(on_press=ConfPopup)
+        self.open_conf.bind(on_press=lambda _: ConfPopup(self.conf_window))
 
 
 
