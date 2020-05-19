@@ -10,8 +10,15 @@
         orientation: 'vertical'
         Label:
             text: 'Configure your device.'
-        BoxLayout:
-            orientation: 'horizontal'
+        GridLayout:
+            cols: 2
+            rows: 2
+
+            TextInput:
+                hint_text: 'Published id:'
+            TextInput:
+                hint_text: 'Described id:'
+
             Button:
                 text: 'Cancel'
                 on_release: root.dismiss()
@@ -21,10 +28,7 @@
 
 
 
-            TextInput:
-                hint_text: 'Published id'
-            TextInput:
-                hint_text: 'Described id'
+
 
 
 
