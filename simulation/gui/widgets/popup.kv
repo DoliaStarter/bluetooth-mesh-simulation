@@ -1,24 +1,34 @@
-#:kivy 1.11.1
-
 <ConfPopup>:
     title: 'Configure your device'
     size_hint: 0.5, 0.5
     separator_color: 0.9, 0.9, 0.9, 1
     title: "Configure your device"
-
+    box_for_id: box_for_id
     BoxLayout:
         orientation: 'vertical'
-        Label:
-            text: 'Configure your device.'
-        GridLayout:
-            cols: 2
-            rows: 2
+    #        Label:
+    #            text: 'Configure your device.'
+        BoxLayout:
+            orientation: 'horizontal'
+            ScrollView:
+                BoxLayout:
+                    id: box_for_id
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+            BoxLayout:
+                pos_hint: {'top': 1}
+                size_hint_y: None
+                height: self.minimum_height
+                TextInput:
+                    size_hint_y: None
+                    height: dp(45)
+                    multiline: False
+                    hint_text: 'Described id:'
 
-            TextInput:
-                hint_text: 'Published id:'
-            TextInput:
-                hint_text: 'Described id:'
-
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.25
             Button:
                 text: 'Cancel'
                 on_release: root.dismiss()
@@ -28,7 +38,12 @@
 
 
 
-
+<PubId>:
+    size_hint_y: None
+    height: dp(45)
+    hint_text: 'Published id:'
+    multiline: False
+    on_text_validate: self.add_id_to_pop()
 
 
 

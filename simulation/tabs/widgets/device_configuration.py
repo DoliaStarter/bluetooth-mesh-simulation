@@ -39,13 +39,21 @@ class DeviceConfigWindow(ScrollView):
 
 
 class DeviceRow(BoxLayout):
-    open_conf =ObjectProperty()
+    open_conf = ObjectProperty()
+    chosen_device = []
 
     def __init__(self, conf_window, **kwargs):
         super().__init__(**kwargs)
         self.conf_window = conf_window
         self.devices.values = Element.registered_elements.keys()
-        self.open_conf.bind(on_press=lambda _: ConfPopup(self.conf_window))
+        # self.open_conf.bind(on_press=lambda _: ConfPopup(self.conf_window))
 
+    def on_spinner_select(self, text):
+        self.chosen_device = text
 
-
+    def open_config(self):
+        print("open_config")
+        if len(self.chosen_device):
+            ConfPopup(self.conf_window)
+        else:
+            pass

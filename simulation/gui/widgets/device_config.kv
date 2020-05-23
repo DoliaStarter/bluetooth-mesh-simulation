@@ -20,12 +20,13 @@
         size_hint_y: None
         text: 'Devices'
         height: dp(75)
-        #on_text: root.parent.newElem()
+        on_text: root.on_spinner_select(self.text)
     Button:
         id: open_conf
         size_hint_y: None
         height: dp(75)
         text: "Configure"
+        on_press: root.open_config()
     Button:
         size_hint_y: None
         height: dp(75)
