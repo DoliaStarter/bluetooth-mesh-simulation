@@ -5,13 +5,15 @@ from functools import partial
 from simulation.nodes.elements import Element
 from kivy.factory import Factory
 from simulation.tabs.widgets.conf_popup import ConfPopup
+from simulation.tiles import Slot
 
 
 class DeviceConfigWindow(ScrollView):
 
-    def __init__(self, config_panel, **kwargs):
+    def __init__(self, main_window: 'MainWindow', **kwargs):
         super().__init__(**kwargs)
-        self._config_panel = config_panel
+        self._config_panel = main_window.config_panel
+        self._device_config_opener = main_window.open_device
         self.current_slot = None
 
     def new_element(self, device: dict = None):
@@ -29,19 +31,22 @@ class DeviceConfigWindow(ScrollView):
             self.new_element(device)
         self.new_element()
 
-
-    def open(self, slot):
+    def open(self, slot: Slot = None):
         """
         Opens config window for slot.
 
         :param slot: slot with node for this config
         """
-        self.save_previous_slot()
-        self.current_slot = slot
+        if slot:
+            self.current_slot = slot
         self._config_panel.clear_widgets()
         self.container.clear_widgets()
         self._parse_slot()
         self._config_panel.add_widget(self)
+        self._device_config_opener.disabled = self.current_slot is None
+
+    def close(self):
+        self.save_previous_slot()
 
     def save_previous_slot(self):
         """

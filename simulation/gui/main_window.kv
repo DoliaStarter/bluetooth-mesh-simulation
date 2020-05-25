@@ -1,5 +1,6 @@
 #:kivy 1.11.1
 #:include simulation/gui/widgets/device_config.kv
+#:include simulation/gui/widgets/room_config.kv
 #:include simulation/gui/widgets/file_chooser.kv
 #:include simulation/gui/styles/tiles.kv
 #:include simulation/gui/widgets/popup.kv
@@ -10,7 +11,8 @@
     size: root.size
     config_panel: config_panel
     map_area: map_area
-
+    open_room: open_room
+    open_device: open_device
     canvas.before:
         Color:
             rgba: 0.05, 0.05, 0.1, 1
@@ -25,11 +27,26 @@
             height: dp(75)
             text: 'Select map'
             on_release: root.upload_map()
-
-
         BoxLayout:
             id: config_panel
             orientation: "vertical"
+        BoxLayout:
+            size_hint_y: None
+            height: dp(75)
+            orientation: "horizontal"
+            Button:
+                id: open_room
+                text: "Open room configuration"
+                on_press: root._open_room_config()
+                disabled: True
+            Button:
+                id: open_device
+                text: "Open device configuration"
+                on_press: root._open_device_config()
+                disabled: True
+
+
+
     BoxLayout:
         orientation: 'vertical'
         GridLayout:
