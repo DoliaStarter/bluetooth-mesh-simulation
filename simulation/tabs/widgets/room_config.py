@@ -1,6 +1,7 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
-
+from simulation.environment import Environment
+from kivy.clock import Clock
 
 class RoomConfigWindow(BoxLayout):
 
@@ -9,7 +10,13 @@ class RoomConfigWindow(BoxLayout):
     def __init__(self, main_window: 'MainWindow', **kwargs):
         super().__init__(**kwargs)
         self._config_panel = main_window.config_panel
-        self.temperature = str(0)
+        self.temperature = Environment.temperature
+        Clock.schedule_interval(self.affect_temperature, 1)
+
+    def affect_temperature(self, dt):
+        Environment.heat()
+        self.temperature = Environment.temperature
+        
 
     def open(self):
         """
@@ -19,6 +26,6 @@ class RoomConfigWindow(BoxLayout):
         """
         self._config_panel.clear_widgets()
         self._config_panel.add_widget(self)
-    
+
     def close(self):
         """Closing this window."""

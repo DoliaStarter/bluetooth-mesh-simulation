@@ -3,10 +3,10 @@
 # currently only shows information about environment variables
 <RoomConfigWindow>:
     orientation: 'vertical'
-    temperature: ""
+    temperature: 0
     Label:
         size_hint_y: None
         height: dp(75)
         markup: True
-        text: "[size=25][b]Temperature is {0}[/b][/size]".format(root.temperature)
+        text: "[size=25][b]Temperature is {0:.2f}[/b] degrees[/size]".format(root.temperature)
     Label:
