@@ -9,8 +9,8 @@ class Slot(Tile, Button):
     """
 
     def __init__(self):
-        super().__init__()
         self.content = []
+        super().__init__()
         """
         Node placed in this slot.
         """
@@ -26,3 +26,5 @@ class Slot(Tile, Button):
         """
         self.content.append(device_record)
 
+    def __str__(self):
+        return str(self.content)

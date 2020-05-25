@@ -2,6 +2,7 @@ from kivy.uix.popup import Popup
 from kivy.properties import ObjectProperty
 from simulation.utils import FileManager
 
+
 class FileChooser(Popup):
     """
     Implements a popup window for map selection.
