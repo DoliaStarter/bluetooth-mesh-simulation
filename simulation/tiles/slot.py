@@ -1,4 +1,5 @@
 from kivy.uix.button import Button
+from kivy.properties import ListProperty
 from simulation.nodes import Node
 from .tile import Tile
 
@@ -7,6 +8,7 @@ class Slot(Tile, Button):
     """
     Type of `Tile` to which device can be assigned.
     """
+    background_color = ListProperty()
 
     def __init__(self):
         self._content = []
@@ -49,6 +51,7 @@ class Slot(Tile, Button):
             self._node.on_remove()
         self._content = new_content
         self._node = Node(new_content, self)
+        self.background_color = (.5, 1, .5, .5)
 
     def __str__(self):
         return str(self.content)

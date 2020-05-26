@@ -18,7 +18,16 @@ class Heater(Element):
         if frame.content is Content.START_HEAT and self.state is State.WAITING:
             self.state = State.HEATING
             Environment.heaters.append(self)
+            self.node.slot.background_color = (1, .5, .5, .5)
+
         elif frame.content is Content.STOP_HEAT and self.state is State.HEATING:
             self.state = State.WAITING
             Environment.heaters.remove(self)
+            self.node.slot.background_color = (.5, 1, .5, .5)
+
         print(f"I received frame {frame}")
+
+    def on_remove(self):
+        super().on_remove()
+        if self in Environment.heaters:
+            Environment.heaters.remove(self)

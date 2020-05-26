@@ -8,8 +8,18 @@
     publishing_id: publishing_id
     BoxLayout:
         orientation: 'vertical'
-        BoxLayout:
-            orientation: 'horizontal'
+        GridLayout:
+            cols: 2
+            Label:
+                markup: True
+                size_hint_y: None
+                height: dp(75)
+                text: "Subsribed id"
+            Label:
+                markup: True
+                size_hint_y: None
+                height: dp(75)
+                text: "Publishing id"
             ScrollView:
                 BoxLayout:
                     id: box_for_id
@@ -17,15 +27,14 @@
                     size_hint_y: None
                     height: self.minimum_height
             BoxLayout:
-                pos_hint: {'top': 1}
-                size_hint_y: None
-                height: self.minimum_height
+                orientation:'vertical'
                 TextInput:
                     id: publishing_id
                     size_hint_y: None
                     height: dp(45)
                     multiline: False
-                    hint_text: 'Published id:'
+                    hint_text: 'Publishing id:'
+                Label:
 
         BoxLayout:
             orientation: 'horizontal'
