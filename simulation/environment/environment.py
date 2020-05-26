@@ -9,7 +9,6 @@ class Environment:
     temperature = 30
     humidity = 0
     illuminance = 0
-
     heaters = []
 
     @staticmethod
@@ -19,7 +18,7 @@ class Environment:
         """
         # if zero heaters, than temperature will decrease
         coeficient = len(Environment.heaters) - 1
-        Environment.temperature += coeficient * 0.01
+        Environment.temperature += coeficient * 0.1
 
     @staticmethod
     def turn_light():

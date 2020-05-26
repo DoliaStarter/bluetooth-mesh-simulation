@@ -8,5 +8,5 @@ that describes interaction of this element with environment.
 """
 from .element import Element
 from .termometr import Termometr
-from .radio import Radio
 from .light import Light
+from .heater import Heater

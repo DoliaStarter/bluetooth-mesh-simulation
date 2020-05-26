@@ -3,21 +3,24 @@ from simulation.network import Frame
 # https://www.bluetooth.com/blog/3-key-factors-that-determinethe-range-of-bluetooth/
 from .elements import Element
 
+
 class Node:
     """Device/collection of devices, that could communicate via network."""
     count = 0
 
-    def __init__(self, elements: list, topics: dict, feature = None):
+    def __init__(self, content: list, slot, feature=None):
         """
-        :param elements: elements, that will be placed in this node
-        :param topics: dict, where key is a topic and all subscribed devices in this node are values
-        {'temperature': [device1, device2, device3 ...]}
-        :param feature: describes, what should do this node on receiving
+        :param content: list of dicts that describes what devices should be contained in this node.
+        {
+            'device': self.device,
+            'publishing': self.publishing,
+            'subcribed': self.subcribed,
+        }
         """
+        self.slot = slot
         self.id = self._set_id()
-        self._elements = elements
-        self._topics = topics
-        self.roles = []
+        self._elements = [Element.registered_elements[element['device']](
+            content=element, node=self) for element in content]
         self._transmitting_power = 10
         self._sensitivity = 5
         """
@@ -51,14 +54,22 @@ class Node:
             self._feature.receive(frame)
         # check if really such mechanism ?
         else:
-            for element in self._topics[frame.topic]:
+            for element in self._elements:
                 element.receive(frame)
-
 
     def could_receive(self, signal_power) -> bool:
         return self.sensitivity < signal_power
 
     def add_element(self, device):
-        # Change 
+        # Change
         dev = Element.from_name(device['device'])
         self._elements.append(dev)
+
+    def send(self, frame):
+        if frame.topic != '':
+            print(f"Sending frame {frame}")
+            self.slot.network.broadcast(frame, src=self)
+
+    def on_remove(self):
+        for element in self._elements:
+            element.on_remove()

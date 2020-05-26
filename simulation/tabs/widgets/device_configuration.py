@@ -37,8 +37,12 @@ class DeviceConfigWindow(ScrollView):
 
         :param slot: slot with node for this config
         """
+        if self.current_slot:
+            self.save_previous_slot()
+
         if slot:
             self.current_slot = slot
+
         self._config_panel.clear_widgets()
         self.container.clear_widgets()
         self._parse_slot()

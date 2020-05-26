@@ -11,9 +11,9 @@ class Network:
     Implement logic of frame transmission.
     """
 
-    def __init__(self, map_: List[List[int]]):
-        self._surface = Surface(map_)
-        self._existing_nodes = []
+    def __init__(self, surface: Surface):
+        self._surface = surface
+        self._existing_slots = []
         self._freqeuncy = 2400
         """
         Standart Bluetooth frequency
@@ -27,13 +27,13 @@ class Network:
         Constant from ITU indoor propagation model
         """
 
-    def add_node(self, new_node):
+    def add_slot(self, new_slot):
         """
         Add new node to the network.
 
         :param new_node: node to be added.
         """
-        self._existing_nodes.append(new_node)
+        self._existing_slots.append(new_slot)
 
     def broadcast(self, frame: Frame, src: Node):
         """
@@ -42,13 +42,15 @@ class Network:
         :param frame: frame to be broadcasted
         :param src: node that sending this frame
         """
-        for node in self.existing_nodes:
-            if node is src:
+        print(f"Broadcasting frame {frame}")
+        for slot in self._existing_slots:
+            if slot.node is src or not slot.node:
                 continue
-            distance = self._calculate_distance(src.world_pos, node.world_pos)
+            distance = self._calculate_distance(
+                src.slot.world_pos, slot.world_pos)
             path_loss = self._calculate_path_loss(self._freqeuncy, distance)
-            if node.could_receive(path_loss):
-                node.receive(frame)
+            if slot.node.could_receive(path_loss):
+                slot.node.receive(frame)
 
     def _calculate_path_loss(self, f: int, d: int) -> float:
         """

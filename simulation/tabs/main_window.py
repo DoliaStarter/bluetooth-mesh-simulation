@@ -8,6 +8,7 @@ import os.path
 from simulation.tiles import Surface, Slot
 from .widgets import FileChooser, DeviceConfigWindow, RoomConfigWindow
 from .widgets.conf_popup import ConfPopup
+from simulation.network import Network
 
 Builder.load_file("simulation/gui/main_window.kv")
 
@@ -31,11 +32,13 @@ class MainWindow(BoxLayout):
         self.map_area.clear_widgets()
         self.map_area.cols = surface.width
         self.open_room.disabled = False
+        self.network = Network(surface)
         for line in surface._surface:
             for tile in line:
                 if isinstance(tile, Slot):
                     tile.bind(on_press=self._open_device_config)
                 self.map_area.add_widget(tile)
+                tile.network = self.network
 
     def upload_map(self):
         FileChooser(callback=self.run)
