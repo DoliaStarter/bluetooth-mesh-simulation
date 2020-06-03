@@ -5,6 +5,8 @@
     separator_color: 0.9, 0.9, 0.9, 1
     title: "Configure your device"
     box_for_id: box_for_id
+    box_light_on: box_light_on
+    box_light_off: box_light_off
     publishing_id: publishing_id
     BoxLayout:
         orientation: 'vertical'
@@ -13,12 +15,12 @@
             Label:
                 markup: True
                 size_hint_y: None
-                height: dp(75)
+                height: dp(30)
                 text: "Subsribed id"
             Label:
                 markup: True
                 size_hint_y: None
-                height: dp(75)
+                height: dp(30)
                 text: "Publishing id"
             ScrollView:
                 BoxLayout:
@@ -35,6 +37,20 @@
                     multiline: False
                     hint_text: 'Publishing id:'
                 Label:
+            StackLayout:
+                id: box_light_on
+                Label:
+                    markup: True
+                    size_hint_y: None
+                    height: dp(30)
+                    text: "Time to switch lights on"
+            StackLayout:
+                id: box_light_off
+                Label:
+                    markup: True
+                    size_hint_y: None
+                    height: dp(30)
+                    text: "Time to switch lights down"
 
         BoxLayout:
             orientation: 'horizontal'
@@ -45,16 +61,3 @@
             Button:
                 text: 'Save'
                 on_press: root.add_new_elem()
-
-
-<SubId>:
-    size_hint_y: None
-    height: dp(45)
-    hint_text: 'Subscribed id:'
-    multiline: False
-    on_text_validate: self.add_id_to_pop()
-
-
-
-
-

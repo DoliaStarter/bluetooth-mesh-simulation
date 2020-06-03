@@ -15,4 +15,3 @@ class Termometr(Element):
             self.send(Content.START_HEAT)
         elif Environment.temperature > self._upper_threshold:
             self.send(Content.STOP_HEAT)
-        

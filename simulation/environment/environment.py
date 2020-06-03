@@ -1,4 +1,4 @@
-
+from datetime import datetime, date, time
 
 class Environment:
     """
@@ -10,6 +10,7 @@ class Environment:
     humidity = 0
     illuminance = 0
     heaters = []
+    time_string = ""
 
     @staticmethod
     def heat():
@@ -26,3 +27,8 @@ class Environment:
         Affect illuminance
         """
         pass
+
+    @staticmethod
+    def set_time():
+        now = datetime.now()
+        Environment.time_string = now.strftime("%H:%M:%S")
