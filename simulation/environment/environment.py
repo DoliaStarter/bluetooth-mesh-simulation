@@ -1,4 +1,4 @@
-from datetime import datetime, date, time
+from datetime import datetime, timedelta
 
 class Environment:
     """
@@ -10,7 +10,7 @@ class Environment:
     humidity = 0
     illuminance = 0
     heaters = []
-    time_string = ""
+    time = datetime.now()
 
     @staticmethod
     def heat():
@@ -30,5 +30,4 @@ class Environment:
 
     @staticmethod
     def set_time():
-        now = datetime.now()
-        Environment.time_string = now.strftime("%H:%M:%S")
+        Environment.time += timedelta(minutes=1)

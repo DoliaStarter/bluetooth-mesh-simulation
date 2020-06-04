@@ -17,15 +17,10 @@ class Light(Element):
     def on_receive(self, frame: Frame) -> None:
         if frame.content is Content.LIGHT_ON and self.state is State.OFF:
             self.state = State.ON
-            self.node.slot.background_color = (.65, 1, .5, .5)
+            self.node.slot.background_color = (.65, 0.1, 0.1, .5)
 
         elif frame.content is Content.LIGHT_OFF and self.state is State.ON:
             self.state = State.OFF
-            self.node.slot.background_color = (2.2, 1, .5, .5)
+            self.node.slot.background_color = (1, 1, .5, .5)
 
-        print(f"I received frame {frame}")
-
-    def on_remove(self):
-        super().on_remove()
-        if self in Environment.heaters:
-            Environment.heaters.remove(self)
+        print(f"Light received frame {frame}")

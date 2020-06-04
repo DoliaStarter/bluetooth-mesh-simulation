@@ -1,5 +1,4 @@
 import re
-import kivy
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.properties import ObjectProperty, StringProperty
@@ -7,6 +6,10 @@ from kivy.uix.label import Label
 from kivy.uix.relativelayout import RelativeLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.popup import Popup
+
+
+class BadDeviceDescription(Exception):
+    pass
 
 
 class ConfPopup(Popup):
@@ -18,7 +21,7 @@ class ConfPopup(Popup):
         self.conf_window = conf_window
         self.device_row = device_row
         self.title = f"Configuring {self.device_row.chosen_device['device']}"
-        if self.device_row.chosen_device['device'] == "light":
+        if self.device_row.chosen_device['device'] == "sensor":
             self.add_light_conf(on=True)
             self.add_light_conf(on=False)
         self.publishing_id.text = self.device_row.chosen_device['publishing']
@@ -44,31 +47,32 @@ class ConfPopup(Popup):
                     'time_on': self.box_light_on.children[0].text,
                     'time_off': self.box_light_off.children[0].text
                 }
+        else:
+            raise BadDeviceDescription()
 
     def add_new_elem(self):
-        self.device_row.save_config(self._parse())
-        #if self.device_row.chosen_device['device'] == 'light':
-        #    self.conf_window.add_widegt(LightConf())
-        #    pass
-        self.conf_window.new_element()
-        self.dismiss()
+        try:
+            self.device_row.save_config(self._parse())
+            self.conf_window.new_element()
+            self.conf_window.save_previous_slot()
+            self.dismiss()
+        except BadDeviceDescription:
+            print("Bad device description provided")
 
     def add_id_to_pop(self, *args, text=""):
-        text_input = TextInput(hint_text='Subscribed id:', height="45dp", multiline=False, size_hint_y=None)
+        text_input = TextInput(hint_text='Subscribed id:',
+                               height="45dp", multiline=False, size_hint_y=None)
         text_input.bind(on_text_validate=self.add_id_to_pop)
         text_input.text = text
         self.box_for_id.add_widget(text_input)
 
-    def add_light_conf(self, *args, on= True):
-        text_input = TextInput(hint_text="format HH:MM", height="45dp", multiline=False, size_hint_y=None)
-        #buttoncallback = lambda _: self.validate_format(text_input.text)
-        #text_input.bind(on_text_validate=buttoncallback)
+    def add_light_conf(self, *args, on=True):
+        text_input = TextInput(hint_text="format HH:MM",
+                               height="45dp", multiline=False, size_hint_y=None)
         if on:
             self.box_light_on.add_widget(text_input)
-            print("adding light on")
         else:
             self.box_light_off.add_widget(text_input)
-            print("adding light off")
 
     def validate_format(self):
         time = r'\d{2}:\d{2}'
@@ -79,9 +83,5 @@ class ConfPopup(Popup):
         match_id_sub = None
         for sub in self.box_for_id.children:
             match_id_sub = re.match(ids, sub.text)
-        if match_id_sub or match_id_pub or match_time_on or match_time_off:
-            return True
-        else:
-            return False
-
-
+        return bool(match_id_sub and match_id_pub and ((self.device_row.chosen_device['device'] == "sensor"
+                                                        and match_time_on and match_time_off) or self.device_row.chosen_device['device'] != "sensor"))

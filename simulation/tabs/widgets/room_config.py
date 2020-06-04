@@ -14,9 +14,9 @@ class RoomConfigWindow(BoxLayout):
         self._config_panel = main_window.config_panel
         self.temperature = Environment.temperature
         self.illuminance = Environment.illuminance
-        self.time_string = Environment.time_string
+        self.time_string = Environment.time.strftime("%H:%M")
         Clock.schedule_interval(self.affect_temperature, 1)
-        Clock.schedule_interval(self.current_time, 1)
+        Clock.schedule_interval(self.current_time, 0.1)
         #illum_affect ???
 
     def affect_temperature(self, dt):
@@ -29,7 +29,7 @@ class RoomConfigWindow(BoxLayout):
 
     def current_time(self, dt):
         Environment.set_time()
-        self.time_string = Environment.time_string
+        self.time_string = Environment.time.strftime("%H:%M")
         
 
     def open(self):

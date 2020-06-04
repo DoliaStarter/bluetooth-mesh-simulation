@@ -3,11 +3,14 @@ from dataclasses import dataclass
 from enum import IntEnum
 
 # never declare generic a enum !
+
+
 class Content(IntEnum):
     START_HEAT = 0
     STOP_HEAT = 1
     LIGHT_ON = 2
     LIGHT_OFF = 3
+
 
 @dataclass
 class Frame:
@@ -21,4 +24,4 @@ class Frame:
     content: Content
 
     def __str__(self):
-        return f"Frame on topic '{self.topic}'. TTL: {self.ttl}"
+        return f"Frame on topic '{self.topic}'. TTL: {self.ttl} with content: {self.content.name}"

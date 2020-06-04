@@ -10,3 +10,4 @@ from .element import Element
 from .termometr import Termometr
 from .light import Light
 from .heater import Heater
+from .sensor import Sensor
