@@ -53,5 +53,6 @@ class Slot(Tile, Button):
         self._node = Node(new_content, self)
         self.background_color = (.5, 1, .5, .5)
 
+
     def __str__(self):
         return str(self.content)

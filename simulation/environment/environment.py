@@ -1,4 +1,6 @@
-from datetime import datetime, timedelta
+import datetime as dt
+import time
+
 
 class Environment:
     """
@@ -10,7 +12,8 @@ class Environment:
     humidity = 0
     illuminance = 0
     heaters = []
-    time = datetime.now()
+    time = dt.datetime.now().time()
+    delta = dt.timedelta(minutes=1)
 
     @staticmethod
     def heat():
@@ -30,4 +33,6 @@ class Environment:
 
     @staticmethod
     def set_time():
-        Environment.time += timedelta(minutes=1)
+        Environment.time = (dt.datetime.combine(dt.date(1, 1, 1), Environment.time) + Environment.delta).time()
+        #Environment.time = (datetime.combine(datetime.date(1, 1, 1), Environment.time) + delta).time()
+        #Environment.time += timedelta(minutes=1)

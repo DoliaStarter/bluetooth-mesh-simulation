@@ -5,12 +5,12 @@
     separator_color: 0.9, 0.9, 0.9, 1
     title: "Configure your device"
     box_for_id: box_for_id
-    box_light_on: box_light_on
-    box_light_off: box_light_off
+    grid: grid
     publishing_id: publishing_id
     BoxLayout:
         orientation: 'vertical'
         GridLayout:
+            id: grid
             cols: 2
             Label:
                 markup: True
@@ -37,20 +37,6 @@
                     multiline: False
                     hint_text: 'Publishing id:'
                 Label:
-            StackLayout:
-                id: box_light_on
-                Label:
-                    markup: True
-                    size_hint_y: None
-                    height: dp(30)
-                    text: "Time to switch lights on"
-            StackLayout:
-                id: box_light_off
-                Label:
-                    markup: True
-                    size_hint_y: None
-                    height: dp(30)
-                    text: "Time to switch lights down"
 
         BoxLayout:
             orientation: 'horizontal'

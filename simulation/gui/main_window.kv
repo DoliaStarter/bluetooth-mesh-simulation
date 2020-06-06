@@ -36,12 +36,15 @@
             orientation: "horizontal"
             Button:
                 id: open_room
+                text_size : self.width, None
+                halign: 'center'
                 text: "Open room configuration"
                 on_press: root._open_room_config()
                 disabled: True
             Button:
                 id: open_device
                 text_size : self.width, None
+                halign: 'center'
                 text: "Open device configuration"
                 on_press: root._open_device_config()
                 disabled: True
