@@ -49,7 +49,7 @@ class Network:
             distance = self._calculate_distance(
                 src.slot.world_pos, slot.world_pos)
             path_loss = self._calculate_path_loss(self._freqeuncy, distance)
-            if slot.node.could_receive(path_loss):
+            if slot.node.could_receive(src.transmitting_power - path_loss/10):
                 slot.node.receive(frame)
 
     def _calculate_path_loss(self, f: int, d: int) -> float:

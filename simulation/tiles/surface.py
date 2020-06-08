@@ -10,7 +10,7 @@ class Surface:
     Create map from file.
     """
 
-    def __init__(self, map_: List[List[int]], meters_in_tile: int = 100):
+    def __init__(self, map_: List[List[int]], meters_in_tile: int = 10):
         """
         :param meters_in_tile: length of one of dimensions of square tile in meters 
         """

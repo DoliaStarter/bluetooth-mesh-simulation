@@ -21,7 +21,7 @@ class Node:
         self.id = self._set_id()
         self._elements = [Element.registered_elements[element['device']](
             content=element, node=self) for element in content]
-        self._transmitting_power = 10
+        self._transmitting_power = 17
         self._sensitivity = 5
         """
         Minimum power of signal, that this node could receive
