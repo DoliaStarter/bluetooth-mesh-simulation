@@ -11,7 +11,7 @@ class Network:
     Implement logic of frame transmission.
     """
 
-    def __init__(self, surface: Surface):
+    def __init__(self, surface: Surface, frame_canvas):
         self._surface = surface
         self._existing_slots = []
         self._freqeuncy = 2400
@@ -26,6 +26,7 @@ class Network:
         """
         Constant from ITU indoor propagation model
         """
+        self.frame_canvas = frame_canvas
 
     def add_slot(self, new_slot):
         """
@@ -42,7 +43,6 @@ class Network:
         :param frame: frame to be broadcasted
         :param src: node that sending this frame
         """
-        print(f"Broadcasting frame {frame}")
         for slot in self._existing_slots:
             if slot.node is src or not slot.node:
                 continue
@@ -50,7 +50,7 @@ class Network:
                 src.slot.world_pos, slot.world_pos)
             path_loss = self._calculate_path_loss(self._freqeuncy, distance)
             if slot.node.could_receive(src.transmitting_power - path_loss/10):
-                slot.node.receive(frame)
+                frame.instantiate(self.frame_canvas, src.pos, slot.node)
 
     def _calculate_path_loss(self, f: int, d: int) -> float:
         """

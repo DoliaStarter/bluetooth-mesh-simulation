@@ -18,6 +18,7 @@ class MainWindow(BoxLayout):
     config_panel = ObjectProperty()
     open_room = ObjectProperty()
     open_device = ObjectProperty()
+    frame_canvas = ObjectProperty()
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -32,7 +33,7 @@ class MainWindow(BoxLayout):
         self.map_area.clear_widgets()
         self.map_area.cols = surface.width
         self.open_room.disabled = False
-        self.network = Network(surface)
+        self.network = Network(surface, self.frame_canvas)
         for line in surface._surface:
             for tile in line:
                 if isinstance(tile, Slot):
@@ -58,4 +59,3 @@ class MainWindow(BoxLayout):
         """
         self.device_config.close()
         self.room_config.open()
-

@@ -35,14 +35,12 @@ class ConfPopup(Popup):
     def _parse(self):
         # if self.validate_format():
             if self.device_row.chosen_device['device'] != "sensor":
-                print("not sensor")
                 return {
                     'device': self.device_row.chosen_device['device'],
                     'publishing': self.publishing_id.text,
                     'subcribed': [_id.text for _id in self.box_for_id.children]
                 }
             else:
-                print("sensor")
                 return {
                     'device': self.device_row.chosen_device['device'],
                     'publishing': self.publishing_id.text,

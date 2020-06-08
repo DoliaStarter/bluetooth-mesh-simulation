@@ -29,6 +29,10 @@ class Node:
         self._feature = feature
 
     @property
+    def pos(self):
+        return self.slot.pos
+
+    @property
     def transmitting_power(self) -> int:
         return self._transmitting_power
 
@@ -67,7 +71,6 @@ class Node:
 
     def send(self, frame):
         if frame.topic != '':
-            print(f"Sending frame {frame}")
             self.slot.network.broadcast(frame, src=self)
 
     def on_remove(self):

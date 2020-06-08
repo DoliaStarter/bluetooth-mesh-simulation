@@ -13,6 +13,7 @@
     map_area: map_area
     open_room: open_room
     open_device: open_device
+    frame_canvas: frame_canvas
     canvas.before:
         Color:
             rgba: 0.05, 0.05, 0.1, 1
@@ -20,6 +21,7 @@
             pos: self.pos
             size: self.size
     BoxLayout:
+        id: config_window
         size_hint_x: .3
         orientation: 'vertical'
         Button:
@@ -48,12 +50,10 @@
                 text: "Open device configuration"
                 on_press: root._open_device_config()
                 disabled: True
-
-
-
-    BoxLayout:
-        orientation: 'vertical'
+    FloatLayout:
         GridLayout:
+            pos: (config_window.width, 0)
+            opacity: 0.8
             cols: 1
             id: map_area
             Label:
@@ -61,7 +61,23 @@
                 valign: 'middle'
                 markup: True
                 text: "[size=30][b]Welcome in Smart Home simulation!\n To start using application, please select a map[/b][/size]"
+        FloatLayout:
+            id: frame_canvas
+            pos: (config_window.width, 0)
 
+
+
+<FrameContainer>:
+    Button:
+        size: (40, 30)
+        pos: root.pos
+        on_press: root.show_frame()
+        Image:
+            source: 'mail.png'
+            y: self.parent.y + self.parent.height - self.parent.size[1]
+            x: self.parent.x
+            size: self.parent.size
+            allow_stretch: True
 
 
 

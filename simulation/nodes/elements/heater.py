@@ -4,6 +4,7 @@ from simulation.environment import Environment
 from enum import IntEnum
 
 
+
 class State(IntEnum):
     HEATING = 1
     WAITING = 2
@@ -24,8 +25,6 @@ class Heater(Element):
             self.state = State.WAITING
             Environment.heaters.remove(self)
             self.node.slot.background_color = (.5, 1, .5, .5)
-
-        print(f"I received frame {frame}")
 
     def on_remove(self):
         super().on_remove()
