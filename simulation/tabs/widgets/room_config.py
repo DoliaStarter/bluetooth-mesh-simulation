@@ -13,8 +13,8 @@ class RoomConfigWindow(BoxLayout):
         self._config_panel = main_window.config_panel
         self.temperature = Environment.temperature
         self.time_string = Environment.time.strftime("%H:%M")
-        Clock.schedule_interval(self.affect_temperature, 1)
-        Clock.schedule_interval(self.current_time, 0.1)
+        Clock.schedule_interval(self.affect_temperature, 3)
+        Clock.schedule_interval(self.current_time, 1)
 
     def affect_temperature(self, dt):
         Environment.heat()

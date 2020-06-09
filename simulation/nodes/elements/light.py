@@ -16,6 +16,7 @@ class Light(Element):
         self.node.slot.background_color = (.65, 0.1, 0.1, .5)
 
     def on_receive(self, frame: Frame) -> None:
+        super().on_receive(frame)
         if frame.content is Content.LIGHT_ON and self.state is State.OFF:
             self.state = State.ON
             self.node.slot.background_color = (1, 1, .5, .5)

@@ -5,19 +5,23 @@ from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.uix.popup import Popup
 from kivy.properties import StringProperty
-
+import random
 
 class Content(IntEnum):
     START_HEAT = 0
     STOP_HEAT = 1
     LIGHT_ON = 2
     LIGHT_OFF = 3
+    SUBSCRIPTION = 4
+    REQUEST = 5
 
 
 class Type(Enum):
     MSG = 'white'
     RELAYED = 'yellow'
     FRIEND_REQUEST = 'green'
+    SUBSCRIPTION = 'blue'
+    CACHED_FRAME = 'red'
 
 
 class Frame:
@@ -25,7 +29,7 @@ class Frame:
     Describe frame, that devices send to each other.
     """
 
-    def __init__(self, topic, ttl, content=None, type=Type.MSG):
+    def __init__(self, topic, ttl, content=None, type_=Type.MSG, payload=''):
         """
         :param topic: topic of this message
         :param ttl: how many hops this frame can made
@@ -33,7 +37,8 @@ class Frame:
         self.topic = topic
         self.ttl = ttl
         self.content = content
-        self.type = Type.MSG
+        self.type = type_
+        self.message = payload
 
     def instantiate(self, layout, pos, dest):
         """Adds widget representing this frame to provided layout"""
@@ -56,7 +61,7 @@ class FrameContainer(Widget):
         self.layout.add_widget(self)
         angle = Vector(0, 1).angle(
             (pos[0] - dest.pos[0], dest.pos[1] - pos[1]))
-        self.vel = Vector(0, 15).rotate(angle)
+        self.vel = Vector(0, 15 +  random.randrange(0,100)/50).rotate(angle)
         self.event = Clock.schedule_interval(self.move, 0.5)
 
     def move(self, dt):
@@ -76,6 +81,7 @@ class FrameInfo(Popup):
     ttl = StringProperty()
     message = StringProperty()
     type_ = StringProperty()
+    payload = StringProperty()
 
     def __init__(self, frame, **kwargs):
         super().__init__(**kwargs)
@@ -83,4 +89,5 @@ class FrameInfo(Popup):
         self.ttl = str(frame.ttl)
         self.message = frame.content.name
         self.type_ = frame.type.name
+        self.payload = frame.message
         self.open()

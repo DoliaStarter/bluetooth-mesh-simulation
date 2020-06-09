@@ -33,6 +33,7 @@
     ttl: ""
     message: ""
     type_: ""
+    payload: ""
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -40,13 +41,17 @@
             text: "[size=20][b]Topic:    {0}[/b][/size]".format(root.topic)
         Label:  
             markup: True
-            text: "[size=20][b]Meesage:    {0}[/b][/size]".format(root.message)
+            text: "[size=20][b]Service:    {0}[/b][/size]".format(root.message)
+        Label:
+            markup: True
+            text: "[size=20][b]Payload:    {0}[/b][/size]".format(root.payload)
         Label:
             markup: True
             text: "[size=20][b]TTL:    {0}[/b][/size]".format(root.ttl)
         Label:
             markup: True
             text: "[size=20][b]Type:    {0}[/b][/size]".format(root.type_)
+        
         BoxLayout:
             orientation: 'horizontal'
             Button:

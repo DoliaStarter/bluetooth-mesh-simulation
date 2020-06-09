@@ -48,9 +48,12 @@ class Network:
                 continue
             distance = self._calculate_distance(
                 src.slot.world_pos, slot.world_pos)
-            path_loss = self._calculate_path_loss(self._freqeuncy, distance)
-            if slot.node.could_receive(src.transmitting_power - path_loss/10):
-                frame.instantiate(self.frame_canvas, src.pos, slot.node)
+            try:
+                path_loss = self._calculate_path_loss(self._freqeuncy, distance)
+                if slot.node.could_receive(src.transmitting_power - path_loss/10):
+                    frame.instantiate(self.frame_canvas, src.pos, slot.node)
+            except ValueError:
+                pass
 
     def _calculate_path_loss(self, f: int, d: int) -> float:
         """

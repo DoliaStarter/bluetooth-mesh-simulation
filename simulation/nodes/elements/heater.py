@@ -15,6 +15,7 @@ class Heater(Element):
         self.state = State.WAITING
 
     def on_receive(self, frame: Frame) -> None:
+        super().on_receive(frame)
         if frame.content is Content.START_HEAT and self.state is State.WAITING:
             self.state = State.HEATING
             Environment.heaters.append(self)
