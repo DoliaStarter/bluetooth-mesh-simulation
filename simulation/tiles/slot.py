@@ -19,6 +19,12 @@ class Slot(Tile, Button):
         """
         self._network = None
 
+    def on_remove(self):
+        self._content = []
+        self.background_color = (.9, .9, .9, .5)
+        if self._node:
+            self._node.on_remove()
+
     @property
     def node(self):
         return self._node
@@ -45,6 +51,8 @@ class Slot(Tile, Button):
             'subcribed': self.subcribed,
         }
         """
+        if not new_content:
+            return
         if self._node is None:
             self._network.add_slot(self)
         else:
@@ -52,7 +60,6 @@ class Slot(Tile, Button):
         self._content = new_content
         self._node = Node(new_content, self)
         self.background_color = (.5, 1, .5, .5)
-
 
     def __str__(self):
         return str(self.content)

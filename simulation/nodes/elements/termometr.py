@@ -5,7 +5,7 @@ from simulation.network import Content
 class Termometr(Element):
     def __init__(self, content, node):
         # TODO Make configurable
-        super().__init__(content, node, use_scheduler=True, frequency=10)
+        super().__init__(content, node, use_scheduler=True, frequency=5)
         self._lower_threshold = 29
         self._upper_threshold = 31
 

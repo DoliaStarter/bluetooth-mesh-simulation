@@ -9,6 +9,7 @@ from simulation.tiles import Surface, Slot
 from .widgets import FileChooser, DeviceConfigWindow, RoomConfigWindow
 from .widgets.conf_popup import ConfPopup
 from simulation.network import Network
+from simulation.environment import Environment
 
 Builder.load_file("simulation/gui/main_window.kv")
 
@@ -24,6 +25,7 @@ class MainWindow(BoxLayout):
         super().__init__(**kwargs)
         self.device_config = DeviceConfigWindow(self)
         self.room_config = RoomConfigWindow(self)
+        self.slots = []
 
     def run(self, map_):
         """
@@ -34,14 +36,23 @@ class MainWindow(BoxLayout):
         self.map_area.cols = surface.width
         self.open_room.disabled = False
         self.network = Network(surface, self.frame_canvas)
+        self.slots = []
         for line in surface._surface:
             for tile in line:
                 if isinstance(tile, Slot):
                     tile.bind(on_press=self._open_device_config)
+                    self.slots.append(tile)
                 self.map_area.add_widget(tile)
                 tile.network = self.network
 
+    def reset(self):
+        for slot in self.slots:
+            slot.on_remove()
+        self.frame_canvas.clear_widgets()
+        Environment.temperature = 30
+
     def upload_map(self):
+        self.reset()
         FileChooser(callback=self.run)
 
     def _open_device_config(self, slot=None):

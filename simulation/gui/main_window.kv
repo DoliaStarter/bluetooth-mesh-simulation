@@ -24,11 +24,20 @@
         id: config_window
         size_hint_x: .3
         orientation: 'vertical'
-        Button:
+        BoxLayout:
+            orientation:'horizontal'
             size_hint_y: None
             height: dp(75)
-            text: 'Select map'
-            on_release: root.upload_map()
+            Button:
+                size_hint_y: None
+                height: dp(75)
+                text: 'Select map'
+                on_release: root.upload_map()
+            Button:
+                size_hint_y: None
+                height: dp(75)
+                text:'Restart'
+                on_press: root.reset()
         BoxLayout:
             id: config_panel
             orientation: "vertical"
