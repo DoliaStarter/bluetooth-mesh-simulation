@@ -45,9 +45,9 @@ class ConfPopup(Popup):
             'role': self.role.text
         }
         if self.device_row.chosen_device['device'] == "sensor":
-            parsed['time_on'] = self.grid.children[1].children[0].text,
+            parsed['time_on'] = self.grid.children[1].children[0].text
             parsed['time_off'] = self.grid.children[0].children[0].text
-
+        print(parsed)
         return parsed
         # else:
         #     raise BadDeviceDescription()
