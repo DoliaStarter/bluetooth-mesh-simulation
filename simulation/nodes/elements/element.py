@@ -1,6 +1,7 @@
-from simulation.network import Content, Frame
+from simulation.network import Content, Frame, Type
 from simulation.nodes.features import Relay
 from kivy.clock import Clock
+
 
 class Element:
     registered_elements = {}
@@ -18,7 +19,7 @@ class Element:
         self._batery_level = 1
         self.publishing = content['publishing']
         self.subscribed = content['subcribed']
-        if content['role'].lower() == 'relay':
+        if content.setdefault('role', '').lower() == 'relay':
             self.role = Relay(self)
         else:
             self.role = None
@@ -39,7 +40,7 @@ class Element:
         """
         Checks if it should receive a frame
         """
-        if frame.topic in self.subscribed:
+        if frame.topic in self.subscribed or (self.role and type(self.role) == Relay) and not (frame.topic == self.publishing and frame.type == Type.RELAYED):
             if self.role:
                 self.role.on_receive(frame)
             else:
@@ -56,7 +57,7 @@ class Element:
         """
 
     def send(self, message: Content, ttl=11):
-        frame = Frame(self.publishing, ttl, message)
+        frame=Frame(self.publishing, ttl, message)
         self.node.send(frame)
 
     def on_remove(self):

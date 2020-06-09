@@ -65,8 +65,8 @@ class Node:
         dev = Element.from_name(device['device'])
         self._elements.append(dev)
 
-    def send(self, frame):
-        if frame.topic != '':
+    def send(self, frame, relayed=False):
+        if frame.topic != '' or relayed:
             self.slot.network.broadcast(frame, src=self)
 
     def on_remove(self):

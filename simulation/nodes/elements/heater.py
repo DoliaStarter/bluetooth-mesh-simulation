@@ -4,7 +4,6 @@ from simulation.environment import Environment
 from enum import IntEnum
 
 
-
 class State(IntEnum):
     HEATING = 1
     WAITING = 2

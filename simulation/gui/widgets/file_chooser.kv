@@ -32,6 +32,7 @@
     topic: ""
     ttl: ""
     message: ""
+    type_: ""
     BoxLayout:
         orientation: 'vertical'
         Label:
@@ -43,6 +44,9 @@
         Label:
             markup: True
             text: "[size=20][b]TTL:    {0}[/b][/size]".format(root.ttl)
+        Label:
+            markup: True
+            text: "[size=20][b]Type:    {0}[/b][/size]".format(root.type_)
         BoxLayout:
             orientation: 'horizontal'
             Button:

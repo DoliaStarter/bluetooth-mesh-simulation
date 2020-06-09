@@ -68,12 +68,13 @@
 
 
 <FrameContainer>:
+    color: 'white'
     Button:
         size: (40, 30)
         pos: root.pos
         on_press: root.show_frame()
         Image:
-            source: 'mail.png'
+            source: 'images/mail_{0}.png'.format(root.color)
             y: self.parent.y + self.parent.height - self.parent.size[1]
             x: self.parent.x
             size: self.parent.size
