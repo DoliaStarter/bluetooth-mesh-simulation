@@ -16,6 +16,7 @@ class ConfPopup(Popup):
     publishing_id = ObjectProperty()
     subscribed = StringProperty()
     grid = ObjectProperty()
+    role = ObjectProperty()
 
     def __init__(self, conf_window, device_row: 'DeviceRow', **kwargs):
         super().__init__(**kwargs)
@@ -23,31 +24,31 @@ class ConfPopup(Popup):
         self.device_row = device_row
         self.title = f"Configuring {self.device_row.chosen_device['device']}"
         if self.device_row.chosen_device['device'] == "sensor":
-            self.add_light_conf(on=True, time=self.device_row.chosen_device.get('time_on') or '')
-            self.add_light_conf(on=False, time=self.device_row.chosen_device.get('time_off') or '')
+            self.add_light_conf(
+                on=True, time=self.device_row.chosen_device.get('time_on') or '')
+            self.add_light_conf(
+                on=False, time=self.device_row.chosen_device.get('time_off') or '')
         self.publishing_id.text = self.device_row.chosen_device['publishing']
         for subscribed_id in self.device_row.chosen_device['subcribed']:
             self.add_id_to_pop(text=subscribed_id)
         if len(self.device_row.chosen_device['subcribed']) == 0:
             self.add_id_to_pop()
+        self.role.text = self.device_row.chosen_device.setdefault('role', '')
         self.open()
 
     def _parse(self):
         # if self.validate_format():
-            if self.device_row.chosen_device['device'] != "sensor":
-                return {
-                    'device': self.device_row.chosen_device['device'],
-                    'publishing': self.publishing_id.text,
-                    'subcribed': [_id.text for _id in self.box_for_id.children]
-                }
-            else:
-                return {
-                    'device': self.device_row.chosen_device['device'],
-                    'publishing': self.publishing_id.text,
-                    'subcribed': [_id.text for _id in self.box_for_id.children],
-                    'time_on': self.grid.children[1].children[0].text,
-                    'time_off': self.grid.children[0].children[0].text
-                }
+        parsed = {
+            'device': self.device_row.chosen_device['device'],
+            'publishing': self.publishing_id.text,
+            'subcribed': [_id.text for _id in self.box_for_id.children],
+            'role': self.role.text
+        }
+        if self.device_row.chosen_device['device'] == "sensor":
+            parsed['time_on'] = self.grid.children[1].children[0].text,
+            parsed['time_off'] = self.grid.children[0].children[0].text
+
+        return parsed
         # else:
         #     raise BadDeviceDescription()
 
@@ -79,7 +80,7 @@ class ConfPopup(Popup):
         else:
             box_light_off = StackLayout()
             box_light_off.add_widget(Label(markup=True, size_hint_y=None, height="30dp",
-                                          text="Time to switch lights off"))
+                                           text="Time to switch lights off"))
             self.grid.add_widget(box_light_off)
             box_light_off.add_widget(text_input)
 

@@ -15,6 +15,7 @@ class Node:
             'device': self.device,
             'publishing': self.publishing,
             'subcribed': self.subcribed,
+            'role'
         }
         """
         self.slot = slot
@@ -26,7 +27,6 @@ class Node:
         """
         Minimum power of signal, that this node could receive
         """
-        self._feature = feature
 
     @property
     def pos(self):
@@ -54,12 +54,8 @@ class Node:
 
     def receive(self, frame: Frame):
         """Receives frame passed to device."""
-        if self._feature:
-            self._feature.receive(frame)
-        # check if really such mechanism ?
-        else:
-            for element in self._elements:
-                element.receive(frame)
+        for element in self._elements:
+            element.receive(frame)
 
     def could_receive(self, signal_power) -> bool:
         return self.sensitivity < signal_power

@@ -7,6 +7,7 @@
     box_for_id: box_for_id
     grid: grid
     publishing_id: publishing_id
+    role: role
     BoxLayout:
         orientation: 'vertical'
         GridLayout:
@@ -37,6 +38,12 @@
                     multiline: False
                     hint_text: 'Publishing id:'
                 Label:
+        BoxLayout:
+            size_hint_y: .25
+            orientation:'horizontal'
+            Spinner:
+                id: role
+                values: ["Relay"]
 
         BoxLayout:
             orientation: 'horizontal'
